@@ -1,0 +1,41 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Zadanie</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-app="appModule">
+  <div class="container" ng-controller="CountriesCtrl">
+    <div class="heading">
+      <div class="row">
+        <div class="col-md-9">
+          <h1>Geographic Permissions</h1>
+        </div>
+        <div class="col-md-3">
+          Sort: <select name="orderSelect" id="orderSelect" ng-options="option.name for option in selectData.options track by option.reverse" ng-model="selectData.selectedOption"></select>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12" ng-repeat="(continentName, continentData) in allCountries track by $index">
+          <div class="well well-lg">
+            <span><input type="checkbox" ng-model="continentData.checked" ng-change="continentCheckbox(continentName)">{{continentName | capitalize}}</span>
+          </div>
+          <ul>
+            <li ng-repeat="(countryId, country) in continentData.data | orderBy:name:selectData.selectedOption.reverse track by $index">
+              <input type="checkbox" ng-model="allCountries[continentName].data[countryId].checked" ng-change="countryCheckbox(continentName)">{{country.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="node_modules/angular/angular.min.js"></script>
+  <script src="js/controllers.js"></script>
+</body>
+</html>
